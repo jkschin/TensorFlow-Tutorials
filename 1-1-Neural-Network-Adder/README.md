@@ -1,4 +1,4 @@
-# Neural Network Adder
+# 1-1 Neural Network Adder
 
 If you're reading this, you've probably decided to pick up deep learning. We start off with a simple TensorFlow implementation of a neural network adder. We do this for 2 reasons:
 
@@ -14,7 +14,7 @@ def inference(data):
   weights = tf.get_variable('weights', [2, 1], tf.float32, tf.zeros_initializer)
   biases = tf.get_variable('biases', [1], tf.float32, tf.zeros_initializer)
   result = tf.matmul(data, weights) + biases
-return result
+  return result
 ```
 
 That's pretty much it. You're done for inference.
@@ -45,7 +45,7 @@ With the loss function defined, we need some kind of optimizer. We will use Adam
 def train(loss, global_step):
   optimizer = tf.train.AdamOptimizer()
   train_op = optimizer.minimize(loss, global_step=global_step)
-return train_op
+  return train_op
 ```
 
 ## Combined
@@ -69,3 +69,9 @@ def train_loop():
       if i % 1000 == 0:
         print "Step: %d, Loss: %f" %(i, loss_val)
 ```
+
+See full code [here](adder1_1.py)
+
+# Conclusion
+
+As you can see, by Step 10000, the loss has approached 0.000000. While this is a good result (unless of course you code your loss function wrongly), you can't see the values of the weights and biases changing with each step. We will do this in [1-2 Neural Network Adder](../1-2-Neural-Network-Adder)
