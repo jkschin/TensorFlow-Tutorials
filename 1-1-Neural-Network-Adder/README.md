@@ -74,4 +74,4 @@ See full code [here](adder1_1.py).
 
 # Conclusion
 
-As you can see, by Step 10000, the loss has approached 0.000000. While this is a good result (unless of course you code your loss function wrongly), you can't see the values of the weights and biases changing with each step. We will do this in [1-2 Neural Network Adder](../1-2-Neural-Network-Adder).
+As you can see, by Step 10000, the loss has approached 0.000000. While this is a good result (unless of course you code your loss function wrongly), you can't see the values of the weights and biases changing with each step. You can't see sample inputs and corresponding results as well! We will do this in [1-2 Neural Network Adder](../1-2-Neural-Network-Adder).
