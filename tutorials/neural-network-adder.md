@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Neural Network Adder
-permalink: /tutorials/neural-network-adder/
+permalink: /neural-network-adder/
 ---
 
 # **Neural Network Adder**
