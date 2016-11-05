@@ -29,9 +29,7 @@ def train_loop():
   result = inference(data)
   loss = loss_fn(result, gt)
   train_op = train(loss, global_step)
-
   saver = tf.train.Saver()
-  tf.add_to_collection('data', data)
   with tf.Session() as sess:
     sess.run(tf.initialize_all_variables())
     for i in range(10001):
@@ -52,7 +50,6 @@ def train_loop():
         print data_in
         print sess.run(tf.get_collection('result')[0], feed_dict={data: data_in})
         print ""
-        # print sess.run(tf.get_collection('weights')[0]), 
         saver.save(sess, 'train_dir/my-model', global_step=i)
 
 def eval():
@@ -69,7 +66,7 @@ def eval():
 
 if __name__ == '__main__':
   train_loop()
-  eval()
+  # eval()
 
 
 

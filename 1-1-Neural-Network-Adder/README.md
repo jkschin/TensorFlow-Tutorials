@@ -1,4 +1,5 @@
 # 1-1 Neural Network Adder
+[Inference](#inference)
 
 If you're reading this, you've probably decided to pick up deep learning. We start off with a simple TensorFlow implementation of a neural network adder. We do this for 2 reasons:
 
