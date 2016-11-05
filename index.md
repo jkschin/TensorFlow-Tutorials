@@ -5,4 +5,4 @@
 layout: home
 ---
 
-## 1. [Neural Network Adder](../neural-network-adder/)
+## 1. [Neural Network Adder]({{ "/neural-network-adder" | relative_url }})
