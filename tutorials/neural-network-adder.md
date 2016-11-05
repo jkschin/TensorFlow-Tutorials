@@ -26,6 +26,7 @@ You can run it from your laptop within 10 seconds and see the results. Without f
 # **Inference**
 
 We start with inference (diagram to be inserted).
+
 ```python
 def inference(data):
   weights = tf.get_variable('weights', [2, 1], tf.float32, tf.zeros_initializer)
