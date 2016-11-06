@@ -13,7 +13,8 @@ permalink: /neural-network-adder/
 5. [Printing Values](#printing-values)
 6. [Name Scopes and Variable Scopes](#name-scopes-and-variable-scopes)
 7. [Saving a Model](#saving-a-model)
-8. [Loading a Model](#loading-a-model)
+8. [Loading a Model (For Inference)](#loading-a-model-for-inference)
+9. [Loading a Model (To Continue Training)](#loading-a-model-to-continue-training)
 
 
 If you're reading this, you've probably decided to pick up deep learning. We start off with a simple TensorFlow implementation of a neural network adder. We do this for 2 reasons:
@@ -222,6 +223,62 @@ And you're done! The results will be written to train_dir. There are three inter
 2. my-model-XXXX. These are the weights at that point in time.
 3. my-model-XXXX.meta. This is the entire graph definition that you can load in future for inference or re-training.
 
-# **Loading a Model** 
+# **Loading a Model (For Inference)** 
 
-To be continued...
+To load a model, you first use tf.train.import_meta_graph to load the graph, and then call .restore to restore the variables. As before, use tf.get_collection to retrieve the input and output tensors for this graph. The for loop prints all the variable names and variable values in the graph. Lastly, making a sess.run call on result, and feeding the [100, 100] array in will evaluate the result of this array through the neural network adder.
+
+Doing this is very neat because all you need is the .meta file, the weights file, and the eval() function.
+
+```python
+def train_loop():
+  ...
+  saver = tf.train.Saver()
+  tf.add_to_collection('data', data) # This adds the entry point for the graph.
+  with tf.Session() as sess:
+  ...
+
+def eval():
+  with tf.Session() as sess:
+    # Note that when saver is called, it is unnecessary to call tf.initialize_all_variables as it will wipe all values to 0.
+    saver = tf.train.import_meta_graph('train_dir/my-model-10000.meta')
+    saver.restore(sess, 'train_dir/my-model-10000')
+    data = tf.get_collection('data')[0]
+    result = tf.get_collection('result')[0]
+    # This step prints all the variables that are saved in the graph.
+    for var in tf.all_variables():
+      print var.name, sess.run(var)
+    print ""
+    print "Result: ", sess.run(result, feed_dict={data: np.array([[100, 100]])}) # Notice that the answer is very close to adding the numbers!
+
+if __name__ == '__main__':
+  train_loop()
+  eval()
+```
+
+# **Loading a Model (To Continue Training)**
+
+Similar to the concept of restoring the graph for inference, but the only difference is that we don't have to call tf.train.import_meta_graph as the graph has already been defined above in train_loop. All we need to do is to restore the weights, and everything works as per normal!
+
+```python
+def train_loop(continue_training):
+  ...
+  saver = tf.train.Saver()
+  tf.add_to_collection('data', data)
+  with tf.Session() as sess:
+    if continue_training:
+      print "Resuming training from previous restore point"
+      saver.restore(sess, 'train_dir/my-model-10000')
+    else:
+      print "Starting training from scratch"
+      sess.run(tf.initialize_all_variables())
+    for i in range(10001):
+      ...
+    ...
+  ...
+
+if __name__ == '__main__':
+  train_loop(True)
+  eval()
+```
+
+That's the end of this tutorial. You can now define a neural network, train it, load it for inference, and load it to continue training, which is basically what you want to do in deep learning. There's more of course, but we will leave that to other tutorials. 
