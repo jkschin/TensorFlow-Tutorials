@@ -30,7 +30,7 @@ def train_loop(continue_training):
 	loss = loss_fn(result, gt)
 	train_op = train(loss, global_step)
 	saver = tf.train.Saver()
-	tf.add_to_collection('data', data)
+	tf.add_to_collection('data', data) # This adds the entry point for the graph.
 	with tf.Session() as sess:
 		if continue_training:
 			print "Resuming training from previous restore point"
