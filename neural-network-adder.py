@@ -30,6 +30,7 @@ def train_loop():
   loss = loss_fn(result, gt)
   train_op = train(loss, global_step)
   saver = tf.train.Saver()
+  tf.add_to_collection('data', data)
   with tf.Session() as sess:
     sess.run(tf.initialize_all_variables())
     for i in range(10001):
@@ -62,11 +63,12 @@ def eval():
     # This step prints all the variables that are saved in the graph.
     for var in tf.all_variables():
       print var.name, sess.run(var)
-    print sess.run(result, feed_dict={data: np.array([[100, 100]])}) # Notice that the answer is very close to adding the numbers!
+    print ""
+    print "Result: ", sess.run(result, feed_dict={data: np.array([[100, 100]])}) # Notice that the answer is very close to adding the numbers!
 
 if __name__ == '__main__':
   train_loop()
-  # eval()
+  eval()
 
 
 
